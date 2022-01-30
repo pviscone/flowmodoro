@@ -4,197 +4,274 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button8"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Short\nbreak"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="478dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:srcCompat="@drawable/wp6387132" />
 
     <Button
-        android:id="@+id/button10"
+        android:id="@+id/buttonLong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Long\nbreak"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.662"
-        app:layout_constraintStart_toEndOf="@+id/button8"
-        tools:layout_editor_absoluteY="478dp" />
+        app:layout_constraintStart_toEndOf="@+id/buttonShort"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.693" />
 
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/buttonShort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Short\nbreak"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.693" />
+
+    <Button
+        android:id="@+id/buttonStudy"
         android:layout_width="88dp"
         android:layout_height="55dp"
         android:text="Study"
-        app:layout_constraintEnd_toStartOf="@+id/button8"
-        app:layout_constraintHorizontal_bias="0.356"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonShort"
+        app:layout_constraintHorizontal_bias="0.328"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="478dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.693" />
 
-    <EditText
-        android:id="@+id/editTextTime3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.572"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="411dp" />
-
-    <EditText
-        android:id="@+id/editTextTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.567"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="220dp" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName3"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="  Long"
-        app:layout_constraintEnd_toStartOf="@+id/editTextTime3"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="416dp" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="            Break time"
-        tools:layout_editor_absoluteX="115dp"
-        tools:layout_editor_absoluteY="288dp" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName2"
-        android:layout_width="71dp"
+    <TextView
+        android:id="@+id/LongTime"
+        android:layout_width="210dp"
         android:layout_height="44dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text=" Short"
-        app:layout_constraintEnd_toStartOf="@+id/editTextTime2"
-        app:layout_constraintHorizontal_bias="0.659"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="344dp" />
-
-    <EditText
-        android:id="@+id/editTextTime2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="time"
+        android:text="00:00:00"
+        android:textAlignment="center"
+        android:textColor="#0097A7"
+        android:textColorHighlight="#00796B"
+        android:textSize="31dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.572"
+        app:layout_constraintHorizontal_bias="0.557"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="343dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.577" />
 
-    <EditText
+    <TextView
+        android:id="@+id/StudyTime"
+        android:layout_width="210dp"
+        android:layout_height="44dp"
+        android:ems="10"
+        android:text="00:00:00"
+        android:textAlignment="center"
+        android:textColor="#F57C00"
+        android:textSize="31dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.557"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.298" />
+
+    <TextView
         android:id="@+id/editTextTextPersonName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="            Study time"
-        tools:layout_editor_absoluteX="115dp"
-        tools:layout_editor_absoluteY="157dp" />
-
-    <Button
-        android:id="@+id/button13"
-        android:layout_width="58dp"
-        android:layout_height="51dp"
-        android:text="Button"
+        android:textColor="#F57C00"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.654"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="69dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.236" />
 
-    <Button
-        android:id="@+id/button14"
-        android:layout_width="56dp"
-        android:layout_height="50dp"
-        android:text="Button"
+    <TextView
+        android:id="@+id/ShortTime"
+        android:layout_width="210dp"
+        android:layout_height="44dp"
+        android:ems="10"
+        android:text="00:00:00"
+        android:textAlignment="center"
+        android:textColor="#00796B"
+        android:textSize="31dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button13"
-        tools:layout_editor_absoluteY="70dp" />
+        app:layout_constraintHorizontal_bias="0.557"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/editTextTextPersonName2"
+        android:layout_width="67dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="40dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=" Short"
+        android:textSize="21dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editTextTime2"
+        app:layout_constraintHorizontal_bias="0.604"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/editTextTextPersonName4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="            Break time"
+        android:textColor="#00796B"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.654"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.43" />
+
+    <TextView
+        android:id="@+id/editTextTextPersonName3"
+        android:layout_width="69dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="36dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="  Long"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editTextTime3"
+        app:layout_constraintHorizontal_bias="0.652"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.581" />
 
     <Button
-        android:id="@+id/button11"
-        android:layout_width="57dp"
-        android:layout_height="51dp"
+        android:id="@+id/buttonPause"
+        android:layout_width="60dp"
+        android:layout_height="53dp"
         android:text="Button"
-        app:layout_constraintEnd_toStartOf="@+id/button13"
+        app:icon="@android:drawable/ic_media_pause"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="69dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.098" />
+
+    <Button
+        android:id="@+id/buttonStop"
+        android:layout_width="60dp"
+        android:layout_height="53dp"
+        android:text="Button"
+        app:icon="@drawable/ic_stop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.457"
+        app:layout_constraintStart_toEndOf="@+id/buttonPause"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.098" />
+
+    <Button
+        android:id="@+id/buttonPlay"
+        android:layout_width="60dp"
+        android:layout_height="53dp"
+        android:text="Button"
+        app:icon="@android:drawable/ic_media_play"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonPause"
+        app:layout_constraintHorizontal_bias="0.584"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.098" />
 
     <EditText
-        android:id="@+id/editTextNumber4"
+        android:id="@+id/SFactor"
         android:layout_width="48dp"
         android:layout_height="41dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintEnd_toStartOf="@+id/editTextNumber5"
-        app:layout_constraintHorizontal_bias="0.539"
+        android:shadowColor="#7E7979"
+        android:text="5"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/LFactor"
+        app:layout_constraintHorizontal_bias="0.658"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="615dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.868" />
 
-    <EditText
-        android:id="@+id/editTextNumber5"
-        android:layout_width="46dp"
-        android:layout_height="42dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toStartOf="@+id/checkBox2"
-        app:layout_constraintHorizontal_bias="0.79"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="615dp" />
-
-    <CheckBox
-        android:id="@+id/checkBox2"
-        android:layout_width="82dp"
-        android:layout_height="47dp"
-        android:text="Penalty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.866"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="610dp" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName5"
-        android:layout_width="77dp"
-        android:layout_height="43dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text=" SFactor "
-        app:layout_constraintBottom_toTopOf="@+id/editTextNumber4"
-        app:layout_constraintTop_toBottomOf="@+id/button9"
-        app:layout_constraintVertical_bias="0.461"
-        tools:layout_editor_absoluteX="60dp" />
-
-    <EditText
+    <TextView
         android:id="@+id/editTextTextPersonName6"
         android:layout_width="77dp"
         android:layout_height="44dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text=" LFactor"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNumber5"
-        app:layout_constraintTop_toBottomOf="@+id/button8"
-        app:layout_constraintVertical_bias="0.461"
-        tools:layout_editor_absoluteX="174dp" />
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/LFactor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.661"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.994" />
+
+    <TextView
+        android:id="@+id/editTextTextPersonName5"
+        android:layout_width="77dp"
+        android:layout_height="43dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=" SFactor "
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textIsSelectable="false"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/SFactor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.335"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.994" />
+
+    <EditText
+        android:id="@+id/LFactor"
+        android:layout_width="46dp"
+        android:layout_height="42dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="5"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.643"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.869" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
