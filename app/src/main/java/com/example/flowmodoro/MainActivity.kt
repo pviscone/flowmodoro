@@ -51,6 +51,8 @@ class MainActivity : AppCompatActivity() {
         lateinit var LongCountDown: CountDownTimer;
         var ShortSeconds: Long=0;
         var LongSeconds:Long=0;
+        var counterS: Long=0;
+        var counterL: Long=0;
 
 
 
@@ -72,15 +74,27 @@ class MainActivity : AppCompatActivity() {
             StudyChrono.setBase(SystemClock.elapsedRealtime() + TimeWhenStopped)
             StudyChrono.start()
             StudyChrono.setOnChronometerTickListener {
-                ShortSeconds=((SystemClock.elapsedRealtime()-StudyChrono.getBase())/(1000*S) );
-                LongSeconds=((SystemClock.elapsedRealtime()-StudyChrono.getBase())/(1000*L) );
+                counterS+=1
+                counterL+=1
+                ShortSeconds+=counterS/S
+                LongSeconds+=counterL/L
+                if (counterS==S){
+                    counterS=0
+                }
+                if (counterL==L){
+                    counterL=0
+                }
+                //ShortSeconds=((SystemClock.elapsedRealtime()-StudyChrono.getBase())/(1000*S) );
+                //LongSeconds=((SystemClock.elapsedRealtime()-StudyChrono.getBase())/(1000*L) );
                 updateTextUI()
             }
         }
 
         fun pause(){
             isRunning = false
-            TimeWhenStopped = StudyChrono.getBase() - SystemClock.elapsedRealtime();
+            if(isStudying) {
+                TimeWhenStopped = StudyChrono.getBase() - SystemClock.elapsedRealtime();
+            }
             StudyChrono.stop()
         }
 
@@ -99,6 +113,7 @@ class MainActivity : AppCompatActivity() {
             isStudying=true
             isLongBreak=false
             isShortBreak=false
+            start()
 
         }
 
@@ -107,6 +122,22 @@ class MainActivity : AppCompatActivity() {
             isStudying=false
             isShortBreak=true
             isLongBreak=false
+            TimeWhenStopped = StudyChrono.getBase() - SystemClock.elapsedRealtime();
+            StudyChrono.stop()
+
+            ShortCountDown = object : CountDownTimer(ShortSeconds*1000, 1000) {
+                override fun onFinish() {
+                    //ALLARME
+                }
+
+                override fun onTick(p0: Long) {
+                    ShortSeconds = p0/1000
+                    updateTextUI()
+                }
+            }
+            ShortCountDown.start()
+
+
 
         }
 
