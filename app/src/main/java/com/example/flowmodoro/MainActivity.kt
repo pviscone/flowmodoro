@@ -18,6 +18,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.SystemClock
 import android.os.CountDownTimer
+import android.text.format.DateUtils
 import android.view.View
 import android.widget.Chronometer
 import androidx.appcompat.app.AppCompatActivity
@@ -31,12 +32,13 @@ class MainActivity : AppCompatActivity() {
 
     var isRunning: Boolean = false;
     var isStudying: Boolean = false;
-    var isBreaking: Boolean = false;
+    var isShortBreak: Boolean = false;
+    var isLongBreak: Boolean = false;
 
 
 
+    var TimeWhenStopped: Long=0;
 
-    var time_when_stopped: Long=0;
 
 
 
@@ -44,34 +46,109 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //var chrono =  Chronometer(this);
-        var chrono: Chronometer = findViewById<Chronometer>(R.id.StudyTime)
+        var StudyChrono: Chronometer = findViewById<Chronometer>(R.id.StudyTime)
+        lateinit var ShortCountDown: CountDownTimer;
+        lateinit var LongCountDown: CountDownTimer;
+        var ShortSeconds: Long=0;
+        var LongSeconds:Long=0;
+
+
+
+
+        fun updateTextUI() {
+            ShortTime.text = DateUtils.formatElapsedTime(ShortSeconds)
+            LongTime.text = DateUtils.formatElapsedTime(LongSeconds)
+        }
+
+        fun start() {
+            val S_string = SFactor.text.toString()
+            val S: Long = S_string.toLong()
+            val L_string = LFactor.text.toString()
+            val L: Long = L_string.toLong()
+            isRunning = true
+            isStudying = true
+            isShortBreak=false
+            isLongBreak=false
+            StudyChrono.setBase(SystemClock.elapsedRealtime() + TimeWhenStopped)
+            StudyChrono.start()
+            StudyChrono.setOnChronometerTickListener {
+                ShortSeconds=((SystemClock.elapsedRealtime()-StudyChrono.getBase())/(1000*S) );
+                LongSeconds=((SystemClock.elapsedRealtime()-StudyChrono.getBase())/(1000*L) );
+                updateTextUI()
+            }
+        }
+
+        fun pause(){
+            isRunning = false
+            TimeWhenStopped = StudyChrono.getBase() - SystemClock.elapsedRealtime();
+            StudyChrono.stop()
+        }
+
+        fun stop(){
+            isRunning=false
+            isStudying=false
+            isShortBreak=false
+            isLongBreak=false
+            StudyChrono.setBase(SystemClock.elapsedRealtime());
+            TimeWhenStopped=0;
+            StudyChrono.stop()
+        }
+
+        fun study(){
+            isRunning=true
+            isStudying=true
+            isLongBreak=false
+            isShortBreak=false
+
+        }
+
+        fun short_break(){
+            isRunning=true
+            isStudying=false
+            isShortBreak=true
+            isLongBreak=false
+
+        }
+
+        fun long_break(){
+            isRunning=true
+            isStudying=false
+            isShortBreak=false
+            isLongBreak=true
+
+        }
 
         buttonPlay.setOnClickListener {
             if (isRunning) {
             } else {
-                isRunning=true
-                isStudying=true
-                chrono.setBase(SystemClock.elapsedRealtime() + time_when_stopped);
-                chrono.start()
+                start()
             }
         }
 
         buttonPause.setOnClickListener {
-            isRunning = false
-            time_when_stopped = chrono.getBase() - SystemClock.elapsedRealtime();
-            chrono.stop()
+            pause()
         }
 
         buttonStop.setOnClickListener {
-            isRunning=false
-            isStudying=false
-            isBreaking=false
-
-            chrono.setBase(SystemClock.elapsedRealtime());
-            time_when_stopped=0;
-            chrono.stop()
+            stop()
         }
+
+
+
+        buttonStudy.setOnClickListener {
+            study()
+        }
+        buttonShort.setOnClickListener {
+            short_break()
+        }
+        buttonLong.setOnClickListener {
+            long_break()
+        }
+
+
+
+
+
 
 
     }
