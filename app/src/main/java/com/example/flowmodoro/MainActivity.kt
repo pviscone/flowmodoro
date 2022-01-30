@@ -13,19 +13,15 @@ class MainActivity : AppCompatActivity() {
 
 
 */
-import android.annotation.SuppressLint
-import android.graphics.Color
+import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.SystemClock
 import android.os.CountDownTimer
+import android.os.SystemClock
 import android.text.format.DateUtils
-import android.view.View
 import android.widget.Chronometer
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-
-
-
+import android.graphics.Color
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,7 +30,6 @@ class MainActivity : AppCompatActivity() {
     var isStudying: Boolean = false;
     var isShortBreak: Boolean = false;
     var isLongBreak: Boolean = false;
-
 
 
     var TimeWhenStopped: Long=0;
@@ -53,6 +48,9 @@ class MainActivity : AppCompatActivity() {
         var LongSeconds:Long=0;
         var counterS: Long=0;
         var counterL: Long=0;
+        var S: Long = (SFactor.text.toString()).toLong()
+        var L: Long = (LFactor.text.toString()).toLong()
+        buttonStop.setBackgroundColor(0xFFFF0000.toInt())
 
 
 
@@ -63,14 +61,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         fun start() {
-            val S_string = SFactor.text.toString()
-            val S: Long = S_string.toLong()
-            val L_string = LFactor.text.toString()
-            val L: Long = L_string.toLong()
+            S=(SFactor.text.toString()).toLong()
+            L=(LFactor.text.toString()).toLong()
             isRunning = true
             isStudying = true
             isShortBreak=false
             isLongBreak=false
+            buttonPlay.setBackgroundColor(0xFFFF0000.toInt())
+            buttonPause.setBackgroundColor(0x000000FF.toInt())
+            buttonStudy.setBackgroundColor(0xFFFF0000.toInt())
+            buttonShort.setBackgroundColor(0x000000FF.toInt())
+            buttonLong.setBackgroundColor(0x000000FF.toInt())
+            buttonStop.setBackgroundColor(0x000000FF.toInt())
             StudyChrono.setBase(SystemClock.elapsedRealtime() + TimeWhenStopped)
             StudyChrono.start()
             StudyChrono.setOnChronometerTickListener {
@@ -84,6 +86,7 @@ class MainActivity : AppCompatActivity() {
                 if (counterL==L){
                     counterL=0
                 }
+
                 //ShortSeconds=((SystemClock.elapsedRealtime()-StudyChrono.getBase())/(1000*S) );
                 //LongSeconds=((SystemClock.elapsedRealtime()-StudyChrono.getBase())/(1000*L) );
                 updateTextUI()
@@ -91,14 +94,28 @@ class MainActivity : AppCompatActivity() {
         }
 
         fun pause(){
+            buttonPlay.setBackgroundColor(0x000000FF.toInt())
+            buttonPause.setBackgroundColor(0xFFFF0000.toInt())
             isRunning = false
             if(isStudying) {
                 TimeWhenStopped = StudyChrono.getBase() - SystemClock.elapsedRealtime();
+            }
+            else if (isShortBreak){
+                ShortCountDown.cancel()
+            }
+            else if (isLongBreak){
+                LongCountDown.cancel()
             }
             StudyChrono.stop()
         }
 
         fun stop(){
+            buttonPlay.setBackgroundColor(0x000000FF.toInt())
+            buttonPause.setBackgroundColor(0x000000FF.toInt())
+            buttonShort.setBackgroundColor(0x000000FF.toInt())
+            buttonLong.setBackgroundColor(0x000000FF.toInt())
+            buttonStudy.setBackgroundColor(0x000000FF.toInt())
+            buttonStop.setBackgroundColor(0xFFFF0000.toInt())
             isRunning=false
             isStudying=false
             isShortBreak=false
@@ -106,9 +123,25 @@ class MainActivity : AppCompatActivity() {
             StudyChrono.setBase(SystemClock.elapsedRealtime());
             TimeWhenStopped=0;
             StudyChrono.stop()
+            ShortSeconds=0
+            LongSeconds=0
+            counterL=0
+            counterS=0
+            updateTextUI()
         }
 
         fun study(){
+            buttonShort.setBackgroundColor(0x000000FF.toInt())
+            buttonLong.setBackgroundColor(0x000000FF.toInt())
+            buttonStudy.setBackgroundColor(0xFFFF0000.toInt())
+            S=(SFactor.text.toString()).toLong()
+            L=(LFactor.text.toString()).toLong()
+            if(isShortBreak){
+                ShortCountDown.cancel()
+            }
+            else if (isLongBreak){
+                LongCountDown.cancel()
+            }
             isRunning=true
             isStudying=true
             isLongBreak=false
@@ -118,16 +151,30 @@ class MainActivity : AppCompatActivity() {
         }
 
         fun short_break(){
-            isRunning=true
+            if (isLongBreak){
+                LongCountDown.cancel()
+            }
+            buttonStudy.setBackgroundColor(0x000000FF.toInt())
+            buttonLong.setBackgroundColor(0x000000FF.toInt())
+            buttonShort.setBackgroundColor(0xFFFF0000.toInt())
+
+
             isStudying=false
             isShortBreak=true
             isLongBreak=false
-            TimeWhenStopped = StudyChrono.getBase() - SystemClock.elapsedRealtime();
+            if (isRunning) {
+                TimeWhenStopped = StudyChrono.getBase() - SystemClock.elapsedRealtime();
+            }
             StudyChrono.stop()
 
             ShortCountDown = object : CountDownTimer(ShortSeconds*1000, 1000) {
                 override fun onFinish() {
-                    //ALLARME
+                    val mp: MediaPlayer = MediaPlayer.create(
+                        baseContext,
+                        R.raw.notification,
+                    )
+
+                    mp.start()
                 }
 
                 override fun onTick(p0: Long) {
@@ -136,16 +183,49 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             ShortCountDown.start()
+            counterL=0
+            counterS=0
 
 
 
         }
 
         fun long_break(){
-            isRunning=true
+            if (isShortBreak){
+                ShortCountDown.cancel()
+            }
+            buttonStudy.setBackgroundColor(0x000000FF.toInt())
+            buttonShort.setBackgroundColor(0x000000FF.toInt())
+            buttonLong.setBackgroundColor(0xFFFF0000.toInt())
+
+
             isStudying=false
             isShortBreak=false
             isLongBreak=true
+            if (isRunning){
+                TimeWhenStopped = StudyChrono.getBase() - SystemClock.elapsedRealtime();
+            }
+
+            StudyChrono.stop()
+            LongCountDown = object : CountDownTimer(LongSeconds*1000, 1000) {
+                override fun onFinish() {
+                    val mp: MediaPlayer = MediaPlayer.create(
+                        baseContext,
+                        R.raw.notification,
+                    )
+
+                    mp.start()
+                }
+
+                override fun onTick(p0: Long) {
+                    LongSeconds = p0/1000
+                    updateTextUI()
+                }
+            }
+            LongCountDown.start()
+            counterL=0
+            counterS=0
+
 
         }
 
