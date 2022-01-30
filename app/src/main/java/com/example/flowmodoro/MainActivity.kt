@@ -105,6 +105,7 @@ class MainActivity : AppCompatActivity() {
             }
             else if (isLongBreak){
                 LongCountDown.cancel()
+                ShortCountDown.cancel()
             }
             StudyChrono.stop()
         }
@@ -141,6 +142,8 @@ class MainActivity : AppCompatActivity() {
             }
             else if (isLongBreak){
                 LongCountDown.cancel()
+                ShortCountDown.cancel()
+
             }
             isRunning=true
             isStudying=true
@@ -223,6 +226,21 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             LongCountDown.start()
+
+            ShortCountDown = object : CountDownTimer(ShortSeconds*1000, 1000) {
+                override fun onFinish() {
+
+                }
+
+                override fun onTick(p0: Long) {
+                    ShortSeconds = p0/1000
+                    updateTextUI()
+                }
+            }
+            ShortCountDown.start()
+
+
+
             counterL=0
             counterS=0
 
