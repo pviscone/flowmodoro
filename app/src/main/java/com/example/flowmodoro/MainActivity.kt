@@ -187,6 +187,7 @@ class MainActivity : AppCompatActivity() {
             }
             if (isLongBreak){
                 LongCountDown.cancel()
+                ShortCountDown.cancel()
             }
             buttonStudy.setBackgroundColor(0x000000FF.toInt())
             buttonLong.setBackgroundColor(0x000000FF.toInt())
