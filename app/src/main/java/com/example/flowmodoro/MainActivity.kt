@@ -21,7 +21,8 @@ import android.text.format.DateUtils
 import android.widget.Chronometer
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import android.graphics.Color
+import java.sql.Time
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     var isStudying: Boolean = false;
     var isShortBreak: Boolean = false;
     var isLongBreak: Boolean = false;
-
+    var isTimerActive:Boolean=false;
 
     var TimeWhenStopped: Long=0;
 
@@ -46,8 +47,8 @@ class MainActivity : AppCompatActivity() {
         lateinit var LongCountDown: CountDownTimer;
         var ShortSeconds: Long=0;
         var LongSeconds:Long=0;
-        var counterS: Long=0;
-        var counterL: Long=0;
+
+        var timer = Timer()
         var S: Long = (SFactor.text.toString()).toLong()
         var L: Long = (LFactor.text.toString()).toLong()
         buttonStop.setBackgroundColor(0xFFFF0000.toInt())
@@ -59,6 +60,9 @@ class MainActivity : AppCompatActivity() {
             ShortTime.text = DateUtils.formatElapsedTime(ShortSeconds)
             LongTime.text = DateUtils.formatElapsedTime(LongSeconds)
         }
+
+
+
 
         fun start() {
             S=(SFactor.text.toString()).toLong()
@@ -75,25 +79,36 @@ class MainActivity : AppCompatActivity() {
             buttonStop.setBackgroundColor(0x000000FF.toInt())
             StudyChrono.setBase(SystemClock.elapsedRealtime() + TimeWhenStopped)
             StudyChrono.start()
-            StudyChrono.setOnChronometerTickListener {
-                counterS+=1
-                counterL+=1
-                ShortSeconds+=counterS/S
-                LongSeconds+=counterL/L
-                if (counterS==S){
-                    counterS=0
-                }
-                if (counterL==L){
-                    counterL=0
-                }
 
-                //ShortSeconds=((SystemClock.elapsedRealtime()-StudyChrono.getBase())/(1000*S) );
-                //LongSeconds=((SystemClock.elapsedRealtime()-StudyChrono.getBase())/(1000*L) );
-                updateTextUI()
+            var S_timerTask: TimerTask = object : TimerTask() {
+                override fun run() {
+                    ShortSeconds+=1
+                    updateTextUI()
+                }
             }
+            var L_timerTask: TimerTask = object : TimerTask() {
+                override fun run() {
+                    LongSeconds+=1
+                    updateTextUI()
+                }
+            }
+            if(!isTimerActive) {
+                timer.scheduleAtFixedRate(S_timerTask, S * 1000, S * 1000)
+                timer.scheduleAtFixedRate(L_timerTask, L * 1000, L * 1000)
+            }
+            isTimerActive=true
+            /*
+            StudyChrono.setOnChronometerTickListener {
+                increment()
+            }*/
         }
 
         fun pause(){
+            if (isTimerActive) {
+                timer.cancel()
+                timer = Timer()
+                isTimerActive=false
+            }
             buttonPlay.setBackgroundColor(0x000000FF.toInt())
             buttonPause.setBackgroundColor(0xFFFF0000.toInt())
             isRunning = false
@@ -110,25 +125,36 @@ class MainActivity : AppCompatActivity() {
             StudyChrono.stop()
         }
 
+
         fun stop(){
+            if (isTimerActive) {
+                timer.cancel()
+                timer = Timer()
+                isTimerActive=false
+            }
+            if(isShortBreak){
+                ShortCountDown.cancel()
+            }
+            else if (isLongBreak) {
+                LongCountDown.cancel()
+                ShortCountDown.cancel()
+            }
+            ShortSeconds=0
+            LongSeconds=0
             buttonPlay.setBackgroundColor(0x000000FF.toInt())
             buttonPause.setBackgroundColor(0x000000FF.toInt())
             buttonShort.setBackgroundColor(0x000000FF.toInt())
             buttonLong.setBackgroundColor(0x000000FF.toInt())
             buttonStudy.setBackgroundColor(0x000000FF.toInt())
             buttonStop.setBackgroundColor(0xFFFF0000.toInt())
+            StudyChrono.setBase(SystemClock.elapsedRealtime());
+            TimeWhenStopped=0;
+            StudyChrono.stop()
+            updateTextUI()
             isRunning=false
             isStudying=false
             isShortBreak=false
             isLongBreak=false
-            StudyChrono.setBase(SystemClock.elapsedRealtime());
-            TimeWhenStopped=0;
-            StudyChrono.stop()
-            ShortSeconds=0
-            LongSeconds=0
-            counterL=0
-            counterS=0
-            updateTextUI()
         }
 
         fun study(){
@@ -154,6 +180,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         fun short_break(){
+            if (isTimerActive) {
+                timer.cancel()
+                timer = Timer()
+                isTimerActive=false
+            }
             if (isLongBreak){
                 LongCountDown.cancel()
             }
@@ -186,14 +217,17 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             ShortCountDown.start()
-            counterL=0
-            counterS=0
 
 
 
         }
 
         fun long_break(){
+            if (isTimerActive) {
+                timer.cancel()
+                timer = Timer()
+                isTimerActive=false
+            }
             if (isShortBreak){
                 ShortCountDown.cancel()
             }
@@ -239,10 +273,6 @@ class MainActivity : AppCompatActivity() {
             }
             ShortCountDown.start()
 
-
-
-            counterL=0
-            counterS=0
 
 
         }
