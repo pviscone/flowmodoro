@@ -309,13 +309,19 @@ class MainActivity : AppCompatActivity() {
 
 
         buttonStudy.setOnClickListener {
-            study()
+            if(!isStudying) {
+                study()
+            }
         }
         buttonShort.setOnClickListener {
-            short_break()
+            if(!isShortBreak) {
+                short_break()
+            }
         }
         buttonLong.setOnClickListener {
-            long_break()
+            if(!isLongBreak) {
+                long_break()
+            }
         }
 
 
