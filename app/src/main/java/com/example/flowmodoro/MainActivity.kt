@@ -205,10 +205,11 @@ class MainActivity : AppCompatActivity() {
                 buttonPause.setBackgroundColor(0x000000FF.toInt())
                 buttonStop.setBackgroundColor(0x000000FF.toInt())
 
-                if (isStudying) {
+                if (isStudying and isRunning) {
                     TimeWhenStopped = StudyChrono.getBase() - SystemClock.elapsedRealtime();
                 }
                 StudyChrono.stop()
+                isRunning=true
                 isStudying = false
                 isShortBreak = true
                 isLongBreak = false
@@ -252,11 +253,12 @@ class MainActivity : AppCompatActivity() {
                 buttonPause.setBackgroundColor(0x000000FF.toInt())
                 buttonStop.setBackgroundColor(0x000000FF.toInt())
 
-                if (isStudying) {
+                if (isStudying and isRunning) {
                     TimeWhenStopped = StudyChrono.getBase() - SystemClock.elapsedRealtime();
                 }
 
                 StudyChrono.stop()
+                isRunning=true
                 isStudying = false
                 isShortBreak = false
                 isLongBreak = true
